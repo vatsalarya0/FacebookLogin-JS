@@ -1,36 +1,57 @@
-// Initialize the Facebook SDK
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : '1336413153573222',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v11.0'
-    });
-      
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            // User is logged in, redirect to your app's home page
-            window.location.href = 'http://google.com/';
-        }
-    });
-};
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook Login Example</title>
+  <style>
+    /* Add some basic styles for the login button */
+    body{
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+    }
+    button {
+      background-color: #3b5998;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
 
-// Load the SDK asynchronously
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+  <!-- Add a button for Facebook login -->
+  <button onclick="login()">Log in with Facebook</button>
 
-// Handle login button click event
-document.getElementById('fb-login-btn').addEventListener('click', function() {
-    // Call the Facebook login function
+  <!-- Load the Facebook SDK asynchronously -->
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <script>
+  function login() {
     FB.login(function(response) {
-        if (response.authResponse) {
-            // User is logged in, redirect to your app's home page
-            window.location.href = 'http://google.com/';
-        }
-    }, {scope: 'ads_management'});
-});
+      if (response.authResponse) {
+        console.log('You are now logged in with Facebook.');
+        // You can now access the user's Facebook data
+        // using the response.authResponse.accessToken
+      } else {
+        console.log('Facebook login failed.');
+      }
+    }, {scope: 'public_profile,email'});
+  }
+
+  // Initialize the Facebook SDK
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1336413153573222',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v11.0'
+    });
+  }
+</script>
+
+</body>
+</html>
